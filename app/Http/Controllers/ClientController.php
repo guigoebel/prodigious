@@ -11,12 +11,15 @@ class ClientController extends Controller
 
     public function index()
     {
-        return view('client.list');
+        $clients = Client::orderBy('nome')
+        ->paginate(20);
+
+        return view('client.list', compact('clients'));
     }
 
     public function create()
     {
-        //
+        //return view('client.form');
     }
 
     public function store(Request $request)

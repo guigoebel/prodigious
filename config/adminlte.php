@@ -241,11 +241,11 @@ return [
         ['header' => 'Clientes'],
         [
             'text'    => 'Clientes',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-suitcase',
             'submenu' => [
                 [
                     'text' => 'listar',
-                    'url'  => 'client/index',
+                    'url'  => 'client',
                 ],
                 [
                     'text'    => 'Adicionar',
