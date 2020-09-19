@@ -249,7 +249,7 @@ return [
                 ],
                 [
                     'text'    => 'Adicionar',
-                    'url'     => 'client/update',
+                    'url'     => 'client/create',
                 ],
 
             ],

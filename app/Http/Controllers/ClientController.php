@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
-use Validator;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -12,52 +12,48 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::orderBy('nome')
-        ->paginate(20);
+        ->paginate(1);
 
         return view('client.list', compact('clients'));
     }
 
     public function create()
     {
-        //return view('client.form');
+        return view('client.update');
     }
 
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        $validator =  Validator::make($request->all(), [
-            'nome' => 'required',
-            'email'=> 'required',
-            'data' => 'required',
-            'sobre'=> 'required',
-        ]);
+        Client::create($request->all());
 
-        $client = new client;
-        $client->nome = $request->input('nome');
-        $client->email = $request->input('email');
-        $client->data = $request->input('data');
-        $client->sobre = $request->input('sobre');
-        $client->save();
-
-        return redirect('home')->with('success', 'Cliente Cadastrado!');
+        return redirect('client')
+            ->withSuccess('Cliente cadastrado com sucesso');
     }
 
     public function show(Client $client)
     {
-        //
+        return view('client.show' , compact('client'));
     }
 
     public function edit(Client $client)
     {
-        //
+        return view('client.update' , [
+            'clients' =>  $client,
+        ]);
     }
 
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        //
+        $client->update($request->all());
+
+        return redirect('client')->withSuccess('Cliente atualizado com sucesso');
     }
 
     public function destroy(Client $client)
     {
-        //
+
+        $client->destroy($client->id);
+
+        return redirect('client')->withSuccess('Cliente deletado com sucesso');
     }
 }
