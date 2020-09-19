@@ -62,10 +62,9 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Nome</th>
               <th>Email</th>
-              <th>Criado em:</th>
+              <th>Junto desde:</th>
               <th class="text-center">Sobre</th>
               <th class="text-center">Ações</th>
             </tr>
@@ -73,7 +72,6 @@
           <tbody>
             @forelse ($clients as $client)
             <tr>
-              <td>{{ $client->id }}</td>
               <td class="white-space">{{ $client->nome }}</td>
               <td>{{ $client->email }}</td>
               <td>{{ $client->data }}</td>
@@ -88,7 +86,6 @@
 
                 <form action="{{ route('client.destroy',$client->id) }}" method="POST">
 
-
                   @csrf
                   @method('DELETE')
 
@@ -97,6 +94,7 @@
 
               </td>
             </tr>
+            {{ $clients->links() }}
             @empty
             <tr>
               <td colspan="8">
