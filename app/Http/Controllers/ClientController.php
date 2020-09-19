@@ -11,7 +11,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        return view('client');
+        return view('client.list');
     }
 
     public function create()
