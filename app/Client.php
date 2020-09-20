@@ -11,4 +11,9 @@ class Client extends Model
     ];
 
     protected $table = 'clients';
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\Images');
+    }
 }
