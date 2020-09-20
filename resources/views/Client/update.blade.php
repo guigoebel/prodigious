@@ -1,28 +1,94 @@
 @extends('adminlte::page')
 
 @section('content')
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-info-circle"></i>
+    <h5>Preencha os campos e clique em Salvar Cliente</h5>
+    <hr class="m-b-5">
+  </div>
 
-<form method="post" action="{{ route('client.store')}}">
-  @csrf
-  <div class="form-group col-md-4">
-    <label for="nome">Nome</label>
-    <input type="text" class="form-control" id="nome" name="nome" aria-describedby="nome"
-      placeholder="Insira o nome do cliente">
-  </div>
-  <div class="form-group col-md-4">
-    <label for="email">Endereço de email</label>
-    <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="Email">
-  </div>
-  <div class="form-group col-md-4">
-    <label for="data">Data de ingresso</label>
-    <input type="date" class="form-control" id="data" name="data" placeholder="Data">
-  </div>
-  <div class="form-group col-md-4">
-    <label for="sobre">Sobre</label>
-    <input type="textarea" class="form-control" id="sobre" name="sobre" aria-describedby="sobre"
-      placeholder="Sobre o cliente">
-  </div>
-  <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Enviar</button>
-</form>
+  <div class="card-body">
+    @isset($clients)
+    <form method="POST" action="{{ route('client.update', $clients->id) }}">
+      @method('PUT')
+      @else
+      <form method="POST" action="{{ route('client.store') }}">
+        @endif
 
+        @csrf
+
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Nome *</label>
+          <div class="col-md-9">
+            <input type="text" id="nome" name="nome" class="form-control @error('nome') @errror is-invalid @enderror"
+              value="{{ old('nome', $clients->nome ?? null) }}" onkeyup="toUpper(this)" placeholder="Nome" autofocus>
+
+            @error('nome')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email *</label>
+          <div class="col-md-9">
+            <input type="email" id="email" name="email"
+              class="form-control @error('email') @errror is-invalid @enderror"
+              value="{{ old('email', $clients->email ?? null) }}" onkeyup="toUpper(this)" placeholder="Detalhes"
+              autofocus>
+
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Data de Ingresso *</label>
+          <div class="col-md-9">
+            <input type="date" id="data" name="data" class="form-control @error('data') @errror is-invalid @enderror"
+              value="{{ old('data', $clients->data ?? null) }}" onkeyup="toUpper(this)" placeholder="Data" autofocus>
+
+            @error('data')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Sobre *</label>
+          <div class="col-md-9">
+            <input type="text" id="sobre" name="sobre" class="form-control @error('sobre') @errror is-invalid @enderror"
+              value="{{ old('sobre', $clients->sobre ?? null) }}" onkeyup="toUpper(this)" placeholder="Sobre" autofocus>
+
+            @error('sobre')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group row mb-0">
+          <div class="col-md-9 offset-md-2">
+            <button type="submit" class="btn btn-success">
+              <i class="fa fa-check"></i> Salvar Cliente
+            </button>
+            <a class="btn btn-warning" href="{{ route('client.index') }}">
+              <i class="fa fa-undo"></i> Voltar à listagem
+            </a>
+          </div>
+        </div>
+      </form>
+
+  </div>
+</div>
 @endsection
