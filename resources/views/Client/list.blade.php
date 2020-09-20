@@ -80,7 +80,7 @@
 
 
 
-                <a class="btn btn-success" href="{{ route('client.edit',$client->id) }}">Editar
+                <a class="btn btn-success" href="{{ route('client.edit',$client->id) }}">
                   <i class="fa fa-edit"></i>
                 </a>
 
@@ -89,7 +89,9 @@
                   @csrf
                   @method('DELETE')
 
-                  <button type="submit" class="btn btn-danger">Deletar</button>
+                  <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                  </button>
                 </form>
 
               </td>
