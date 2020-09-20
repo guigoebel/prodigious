@@ -68,6 +68,13 @@ class ClientController extends Controller
 
     public function uploadImages(Request $request, Client $client){
 
+        $validated = $request->validate([
+            'files.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
+        ],[
+            'files.*.mimes' => 'Only jpeg, png, jpg and bmp images are allowed',
+            'files.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',
+        ]);
+
         $files = $request->file('files');
             foreach($files as $file) {
 
@@ -80,4 +87,5 @@ class ClientController extends Controller
                 $image->save();
             }
     }
+
 }
