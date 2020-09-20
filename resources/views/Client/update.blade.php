@@ -10,10 +10,10 @@
 
   <div class="card-body">
     @isset($clients)
-    <form method="POST" action="{{ route('client.update', $clients->id) }}">
+    <form method="POST" action="{{ route('client.update', $clients->id) }}" enctype="multipart/form-data">
       @method('PUT')
       @else
-      <form method="POST" action="{{ route('client.store') }}">
+      <form method="POST" action="{{ route('client.store') }}" enctype="multipart/form-data">
         @endif
 
         @csrf
@@ -68,6 +68,19 @@
               value="{{ old('sobre', $clients->sobre ?? null) }}" onkeyup="toUpper(this)" placeholder="Sobre" autofocus>
 
             @error('sobre')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Fotos</label>
+          <div class="col-md-9">
+            <input type="file" id="files" name="files[]" multiple accept="image/*"
+              class="form-control @error('file') @errror is-invalid @enderror">
+            @error('file')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>
