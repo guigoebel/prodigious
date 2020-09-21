@@ -87,7 +87,19 @@
             @enderror
           </div>
         </div>
-
+        @isset($clients->images)
+        <div>
+          @forelse ($clients->images as $images)
+          <div class="text-center">
+            <li>
+              <img class="rounded img-fluid" src="{{ asset('storage/'. $images->imagem) }}">
+            </li>
+          </div>
+          @empty
+          <p>Cliente sem imagens</p>
+          @endforelse
+        </div>
+        @endif
         <hr>
 
         <div class="form-group row mb-0">

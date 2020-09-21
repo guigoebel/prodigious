@@ -14,6 +14,6 @@ class Client extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Models\Images');
+        return $this->hasMany('App\Images');
     }
 }
