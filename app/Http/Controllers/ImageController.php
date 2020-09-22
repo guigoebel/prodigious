@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    public function destroy(Images $image){
+    public function destroy($image){
+        $image = Images::findorFail($image);
 
-        dd($image);
+        if(!$image){
+            return abort('404');
+        }
+
         $client_id = $image->client_id;
         $image = $image->destroy($image->id);
-        return redirect('client.update', $client_id);
+        return redirect()->route('client.edit', [$client_id]);
     }
 }

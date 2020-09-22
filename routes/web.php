@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('client', 'ClientController');
+Route::delete('/delete-image/{images}', 'ImageController@destroy')->name('image.destroy');

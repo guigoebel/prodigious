@@ -87,19 +87,7 @@
             @enderror
           </div>
         </div>
-        @isset($clients->images)
-        <div>
-          @forelse ($clients->images as $images)
-          <div class="text-center">
-            <li>
-              <img class="rounded img-fluid" src="{{ asset('storage/'. $images->imagem) }}">
-            </li>
-          </div>
-          @empty
-          <p>Cliente sem imagens</p>
-          @endforelse
-        </div>
-        @endif
+
         <hr>
 
         <div class="form-group row mb-0">
@@ -113,7 +101,45 @@
           </div>
         </div>
       </form>
+      @isset($clients->images)
+      <div>
+        <div class="col-md-12 table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Imagem</th>
+                <th class="text-center">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse ($clients->images as $images)
+              <tr>
+                <td class="text-center">
+                  <div class="text-center">
+                    <img class="rounded img-fluid" src="{{ asset('storage/'. $images->imagem) }}">
+                  </div>
+                </td>
+                <td>
+                  <form action="{{ route('image.destroy',$images->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              @empty
+              <p>Cliente sem imagens</p>
+              @endforelse
+            </tbody>
+          </table>
 
+
+
+        </div>
+        @endif
+
+      </div>
   </div>
-</div>
-@endsection
+  @endsection
