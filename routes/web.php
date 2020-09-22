@@ -20,5 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('client', 'ClientController');
-Route::delete('/delete-image/{images}', 'ImageController@destroy')->name('image.destroy');
+Route::resource('client', 'ClientController')->middleware('auth');;
+Route::delete('/delete-image/{images}', 'ImageController@destroy')->name('image.destroy')->middleware('auth');;
