@@ -232,12 +232,6 @@ return [
 
     'menu' => [
 
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
         ['header' => 'Clientes'],
         [
             'text'    => 'Clientes',
