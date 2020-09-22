@@ -35,19 +35,6 @@
   <div class="card-body">
     <div class="row">
 
-      <div class="col-md-6">
-        <form method="GET" action="{{ route('client.index') }}">
-          <div class="input-group mb-3">
-            <input class="form-control" name="search" value="{{ request('search') ?? '' }}"
-              placeholder="Pesquisar por nome ou descrição..." />
-            <div class="input-group-append">
-              <button class="btn btn-info" type="submit">
-                <i class="fa fa-search"></i> Buscar
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
 
       <div class="col-md-6 text-right">
         <a href="{{ route('client.create') }}" class="btn btn-info">
@@ -79,6 +66,9 @@
               <td class="text-center">
 
 
+                <a class="btn btn-warning" href="{{ route('client.show',$client->id) }}">
+                  <i class="fa fa-eye"></i>
+                </a>
 
                 <a class="btn btn-success" href="{{ route('client.edit',$client->id) }}">
                   <i class="fa fa-edit"></i>
