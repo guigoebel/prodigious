@@ -6,15 +6,26 @@ use App\Client;
 use App\Images;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
+use App\Repositories\ClientRepositoryInterface;
 
 class ClientController extends Controller
 {
 
+    private $clientRepository;
+
+    public function __construct(ClientRepositoryInterface $clientRepository){
+        $this->clientRepository = $clientRepository;
+    }
+
     public function index()
     {
-        $clients = Client::orderBy('nome')
-        ->with('images')
-        ->paginate(1);
+        $clients = null;
+
+        try{
+            $clients = $this->clientRepository->all();
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
+        }
 
         return view('client.list', compact('clients'));
     }
@@ -26,10 +37,14 @@ class ClientController extends Controller
 
     public function store(ClientRequest $request)
     {
-        $client = Client::create($request->all());
+        try{
+            $client = Client::create($request->all());
 
-        if ($request->hasfile('files')) {
-            $this->uploadImages($request, $client);
+            if ($request->hasfile('files')) {
+                $this->uploadImages($request, $client);
+            }
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
         }
 
         return redirect('client')
@@ -38,13 +53,22 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
+        try{
+            $client = $this->clientRepository->findById($client->id);
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
+        }
+
         return view('client.show' , compact('client'));
     }
 
     public function edit(Client $client)
     {
-
-        $client = $client->load('images');
+        try{
+            $client = $this->clientRepository->findById($client->id);
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
+        }
 
         return view('client.update' , [
             'clients' =>  $client,
@@ -53,12 +77,17 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, Client $client)
     {
-        $client = $client->load('images');
+        try{
+            $client = $this->clientRepository->findById($client->id);
 
-        $client->update($request->all());
+            $client->update($request->all());
 
-        if ($request->hasfile('files')) {
-            $this->uploadImages($request, $client);
+            if ($request->hasfile('files')) {
+                $this->uploadImages($request, $client);
+            }
+
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
         }
 
         return redirect('client')->withSuccess('Cliente atualizado com sucesso');
@@ -66,8 +95,11 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-
-        $client->destroy($client->id);
+        try{
+            $client = $this->clientRepository->delete($client->id);
+        }catch(Exception $e){
+            return redirect()->route('home')->with('error');
+        }
 
         return redirect('client')->withSuccess('Cliente deletado com sucesso');
     }
