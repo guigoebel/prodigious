@@ -22,7 +22,7 @@ class ClientController extends Controller
         $clients = null;
 
         try{
-            $clients = $this->clientRepository->all();
+            $clients = $this->clientRepository->allPaginated(5);
         }catch(Exception $e){
             return redirect()->route('home')->with('error');
         }

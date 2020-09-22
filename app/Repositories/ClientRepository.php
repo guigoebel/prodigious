@@ -8,9 +8,13 @@ class ClientRepository implements ClientRepositoryInterface
 {
 
     public function all(){
+        return Client::all();
+    }
+
+    public function allPaginated($int){
         return Client::orderBy('nome')
         ->with('images')
-        ->paginate(1);
+        ->paginate($int);
     }
 
     public function findById($id){
