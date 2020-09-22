@@ -11,8 +11,8 @@ class Images extends Model
         'image', 'client_id'
     ];
 
-    public function client()
-    {
-        return $this->hasOne('App\Models\Client');
+    public function images(){
+        return $this->belongsTo('App\Client');
     }
+
 }

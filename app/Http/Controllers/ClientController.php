@@ -13,6 +13,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::orderBy('nome')
+        ->with('images')
         ->paginate(1);
 
         return view('client.list', compact('clients'));
@@ -42,6 +43,9 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
+
+        $client = $client->load('images');
+
         return view('client.update' , [
             'clients' =>  $client,
         ]);
@@ -49,6 +53,8 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, Client $client)
     {
+        $client = $client->load('images');
+
         $client->update($request->all());
 
         if ($request->hasfile('files')) {
